@@ -36,7 +36,10 @@ Parameters: str
 Returns: str
 '''
 def parseName(fromString):
-    return
+    start = fromString.find(":") + 1
+    end = fromString.find("(")
+    pname = fromString[start:end].strip()   # person's name
+    return pname
 
 
 '''
@@ -46,7 +49,10 @@ Parameters: str
 Returns: str
 '''
 def parsePosition(fromString):
-    return
+    start = fromString.find("(") + 1
+    end = fromString.find("from")
+    ppos = fromString[start:end].strip()    # person's position
+    return ppos
 
 
 '''
@@ -56,7 +62,10 @@ Parameters: str
 Returns: str
 '''
 def parseState(fromString):
-    return
+    start = fromString.find("from") + 4
+    end = fromString.find(")")
+    pstate = fromString[start:end].strip()
+    return pstate
 
 
 '''
@@ -263,7 +272,9 @@ def scatterPlot(xValues, yValues, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    test.testMakeDataFrame()
+    test.testParseName()
+    test.testParsePosition()
+    test.testParseState()
     """ print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
