@@ -76,7 +76,7 @@ Returns: list of strs
 '''
 def findHashtags(message):
     message += " "
-    hmessage = []
+    hmessage = []               #Hashtag Message
 
     for i in range(len(message)):
         if message[i] == "#":
@@ -97,7 +97,9 @@ Parameters: dataframe ; str
 Returns: str
 '''
 def getRegionFromState(stateDf, state):
-    return
+    dfRegion = stateDf.loc[stateDf["state"] == state, "region"]
+    region = dfRegion.values[0]
+    return region
 
 
 '''
@@ -287,7 +289,8 @@ if __name__ == "__main__":
     # test.testParseName()
     # test.testParsePosition()
     # test.testParseState()
-    test.testFindHashtags()
+    # test.testFindHashtags()
+    test.testGetRegionFromState()
     """ print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
