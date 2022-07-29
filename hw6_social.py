@@ -75,7 +75,19 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    return
+    message += " "
+    hmessage = []
+
+    for i in range(len(message)):
+        if message[i] == "#":
+            start = i
+            for j in range(i+1,len(message)):
+                if message[j] in endChars:
+                    end = j
+                    hmessage.append(message[start:end])
+                    break
+
+    return hmessage
 
 
 '''
@@ -272,9 +284,10 @@ def scatterPlot(xValues, yValues, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    test.testParseName()
-    test.testParsePosition()
-    test.testParseState()
+    # test.testParseName()
+    # test.testParsePosition()
+    # test.testParseState()
+    test.testFindHashtags()
     """ print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
     test.week1Tests()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
