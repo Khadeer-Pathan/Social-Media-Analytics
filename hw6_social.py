@@ -1,6 +1,6 @@
 """
 Social Media Analytics Project
-Name:
+Name: Khadeer
 Roll Number:
 """
 
@@ -25,7 +25,8 @@ Parameters: str
 Returns: dataframe
 '''
 def makeDataFrame(filename):
-    return
+    df = pd.read_csv(filename)
+    return df
 
 
 '''
@@ -35,7 +36,10 @@ Parameters: str
 Returns: str
 '''
 def parseName(fromString):
-    return
+    start = fromString.find(":") + 1
+    end = fromString.find("(")
+    pname = fromString[start:end].strip()   # person's name
+    return pname
 
 
 '''
@@ -45,7 +49,10 @@ Parameters: str
 Returns: str
 '''
 def parsePosition(fromString):
-    return
+    start = fromString.find("(") + 1
+    end = fromString.find("from")
+    ppos = fromString[start:end].strip()    # person's position
+    return ppos
 
 
 '''
@@ -55,7 +62,10 @@ Parameters: str
 Returns: str
 '''
 def parseState(fromString):
-    return
+    start = fromString.find("from") + 4
+    end = fromString.find(")")
+    pstate = fromString[start:end].strip()
+    return pstate
 
 
 '''
@@ -65,7 +75,19 @@ Parameters: str
 Returns: list of strs
 '''
 def findHashtags(message):
-    return
+    message += " "
+    hmessage = []               #Hashtag Message
+
+    for i in range(len(message)):
+        if message[i] == "#":
+            start = i
+            for j in range(i+1,len(message)):
+                if message[j] in endChars:
+                    end = j
+                    hmessage.append(message[start:end])
+                    break
+
+    return hmessage
 
 
 '''
@@ -75,7 +97,9 @@ Parameters: dataframe ; str
 Returns: str
 '''
 def getRegionFromState(stateDf, state):
-    return
+    dfRegion = stateDf.loc[stateDf["state"] == state, "region"]
+    region = dfRegion.values[0]
+    return region
 
 
 '''
@@ -85,6 +109,21 @@ Parameters: dataframe ; dataframe
 Returns: None
 '''
 def addColumns(data, stateDf):
+    names = [] ; positions = [] ; states = [] ; regions = [] ; hashtags = []
+    for index, row in data.iterrows():
+
+        names.append(parseName(row["label"]))
+        positions.append(parsePosition(row["label"]))
+        state = parseState(row["label"]) ; states.append(state)   # This statement has been used for ease and understanding 
+        regions.append(getRegionFromState(stateDf, state))        # regions.append(getRegionFromState(stateDf, parseState(row["label"])))
+        hashtags.append(findHashtags(row["text"]))
+
+    data["name"] = names
+    data["position"] = positions
+    data["state"] = states
+    data["region"] = regions
+    data["hashtags"] = hashtags
+
     return
 
 
@@ -98,7 +137,16 @@ Returns: str
 '''
 def findSentiment(classifier, message):
     score = classifier.polarity_scores(message)['compound']
-    return
+    # print(score)
+    if score < -0.1:
+        # print( "negative" )
+        return "negative"
+    elif score > 0.1:
+        # print( "positive" )
+        return "positive"
+    else:
+        # print( "neutral" )
+        return "neutral"
 
 
 '''
@@ -262,12 +310,19 @@ def scatterPlot(xValues, yValues, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek1()
+    # test.testParseName()
+    # test.testParsePosition()
+    # test.testParseState()
+    # test.testFindHashtags()
+    # test.testGetRegionFromState()
+    # test.testAddColumns()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek1()
 
     ## Uncomment these for Week 2 ##
+    test.testFindSentiment()
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
