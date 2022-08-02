@@ -173,9 +173,6 @@ Parameters: dataframe ; str ; str
 Returns: dict mapping strs to ints
 '''
 def getDataCountByState(data, colName, dataToCount):
-    addSentimentColumn(data)
-    stateDf = makeDataFrame("data/statemappings.csv")
-    addColumns(data, stateDf)
     statecountdict = {}
     # print(data["sentiment"]); # print(data["message"]); # print(data["bias"])
     if colName == "" and dataToCount == "" :
@@ -202,7 +199,17 @@ Parameters: dataframe ; str
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def getDataForRegion(data, colName):
-    return
+    regiondict = {}
+    for index, row in data.iterrows():
+        if row["region"] not in regiondict:
+            regiondict[row["region"]] = {}
+            regiondict[row["region"]][row[colName]] = 1
+        else: 
+            if row[colName] not in regiondict[row["region"]]:
+              regiondict[row["region"]][row[colName]] = 1        
+            else:
+                regiondict[row["region"]][row[colName]] += 1
+    return regiondict
 
 
 '''
@@ -349,7 +356,12 @@ if __name__ == "__main__":
     ## Uncomment these for Week 2 ##
     # test.testFindSentiment()
     # test.testAddSentimentColumn()
-    test.testGetDataCountByState(makeDataFrame("data/politicaldata.csv"))
+    df = makeDataFrame("data/politicaldata.csv")
+    stateDf = makeDataFrame("data/statemappings.csv")
+    addSentimentColumn(df)
+    addColumns(df, stateDf)
+    # test.testGetDataCountByState(df)
+    test.testGetDataForRegion(df)
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
