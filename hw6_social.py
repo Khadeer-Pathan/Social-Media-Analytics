@@ -238,7 +238,13 @@ Parameters: dict mapping strs to ints ; int
 Returns: dict mapping strs to ints
 '''
 def mostCommonHashtags(hashtags, count):
-    return
+    hashtagssortbyval = {k:v for k, v in sorted(hashtags.items(), key=lambda v:v[1], reverse=True)}
+    topcounthashtagsdict = {}
+    for i in hashtagssortbyval:
+        if len(topcounthashtagsdict) < count:
+            topcounthashtagsdict[i] = hashtagssortbyval[i]
+
+    return topcounthashtagsdict
 
 
 '''
@@ -371,7 +377,8 @@ if __name__ == "__main__":
     addColumns(df, stateDf)
     # test.testGetDataCountByState(df)
     # test.testGetDataForRegion(df)
-    test.testGetHashtagRates(df)
+    # test.testGetHashtagRates(df)
+    test.testMostCommonHashtags(df)
     """print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
