@@ -283,20 +283,18 @@ Returns: None
 '''
 def graphStateCounts(stateCounts, title):
     import matplotlib.pyplot as plt
-    xLabels = []; labelList = []; valueLists =[]
+    xLabels = []; valueLists =[]
     for i in stateCounts:
         xLabels.append(i)
-        # labelList.append(i)
         valueLists.append(stateCounts[i])
-    # sideBySideBarPlots(xLabels, labelList, valueLists, title)
     
-    plt.bar(xLabels, valueLists)
+    # plt.bar(xLabels, valueLists)
     plt.xlabel("States")
     plt.ylabel("Count")
     plt.title(title)
     plt.xticks(ticks = list(range(len(xLabels))), labels = xLabels, rotation="vertical")
     plt.tight_layout()
-    plt.show()
+    # plt.show()
 
     return
 
@@ -317,20 +315,18 @@ def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
         if n > len(featureratedict):
             featureratedict[i] = featurerate[i]
 
-    xLabels = [] ; labelList = [] ; valueLists = []
+    xLabels = [] ; valueLists = []
     for i in featureratedict:
         xLabels.append(i)
-        # labelList.append(i)
         valueLists.append(featureratedict[i])
-    # sideBySideBarPlots(xLabels, labelList, valueLists, title)
 
-    plt.bar(xLabels, valueLists)
+    # plt.bar(xLabels, valueLists)
     plt.xlabel("States")
     plt.ylabel("Count")
     plt.title(title)
     plt.xticks(ticks = list(range(len(xLabels))), labels = xLabels)
     plt.tight_layout()
-    plt.show()
+    # plt.show()
 
     return
 
@@ -342,6 +338,18 @@ Parameters: dict mapping strs to (dicts mapping strs to ints) ; str
 Returns: None
 '''
 def graphRegionComparison(regionDicts, title):
+    xLabels = []; labelList = []; valueLists = []
+    for i in regionDicts:
+        labelList.append(i)
+        templst = []
+        for j in regionDicts[i]:
+            templst.append(regionDicts[i][j])
+            if j not in xLabels:
+                xLabels.append(j)
+        valueLists.append(templst)
+
+    sideBySideBarPlots(xLabels, labelList, valueLists, title)
+
     return
 
 
