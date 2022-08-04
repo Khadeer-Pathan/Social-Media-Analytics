@@ -286,9 +286,18 @@ def graphStateCounts(stateCounts, title):
     xLabels = []; labelList = []; valueLists =[]
     for i in stateCounts:
         xLabels.append(i)
-        labelList.append(i)
+        # labelList.append(i)
         valueLists.append(stateCounts[i])
-    sideBySideBarPlots(xLabels, labelList, valueLists, title)
+    # sideBySideBarPlots(xLabels, labelList, valueLists, title)
+    
+    plt.bar(xLabels, valueLists)
+    plt.xlabel("States")
+    plt.ylabel("Count")
+    plt.title(title)
+    plt.xticks(ticks = list(range(len(xLabels))), labels = xLabels, rotation="vertical")
+    plt.tight_layout()
+    plt.show()
+
     return
 
 
@@ -299,6 +308,30 @@ Parameters: dict mapping strs to ints ; dict mapping strs to ints ; int ; str
 Returns: None
 '''
 def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
+    featurerate = {}
+    for i in stateFeatureCounts:
+        featurerate[i] = (stateFeatureCounts[i]/stateCounts[i])
+    featurerate = {k:v for k,v in sorted(featurerate.items(), key=lambda v:v[1] ,reverse=True)}
+    featureratedict = {}
+    for i in featurerate:
+        if n > len(featureratedict):
+            featureratedict[i] = featurerate[i]
+
+    xLabels = [] ; labelList = [] ; valueLists = []
+    for i in featureratedict:
+        xLabels.append(i)
+        # labelList.append(i)
+        valueLists.append(featureratedict[i])
+    # sideBySideBarPlots(xLabels, labelList, valueLists, title)
+
+    plt.bar(xLabels, valueLists)
+    plt.xlabel("States")
+    plt.ylabel("Count")
+    plt.title(title)
+    plt.xticks(ticks = list(range(len(xLabels))), labels = xLabels)
+    plt.tight_layout()
+    plt.show()
+
     return
 
 
