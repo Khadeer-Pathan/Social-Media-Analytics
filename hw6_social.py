@@ -4,6 +4,7 @@ Name: Khadeer
 Roll Number:
 """
 
+from tkinter import X
 import hw6_social_tests as test
 
 project = "Social" # don't edit this
@@ -282,6 +283,12 @@ Returns: None
 '''
 def graphStateCounts(stateCounts, title):
     import matplotlib.pyplot as plt
+    xLabels = []; labelList = []; valueLists =[]
+    for i in stateCounts:
+        xLabels.append(i)
+        labelList.append(i)
+        valueLists.append(stateCounts[i])
+    sideBySideBarPlots(xLabels, labelList, valueLists, title)
     return
 
 
