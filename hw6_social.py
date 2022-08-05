@@ -288,13 +288,13 @@ def graphStateCounts(stateCounts, title):
         xLabels.append(i)
         valueLists.append(stateCounts[i])
     
-    # plt.bar(xLabels, valueLists)
+    plt.bar(xLabels, valueLists)
     plt.xlabel("States")
     plt.ylabel("Count")
     plt.title(title)
     plt.xticks(ticks = list(range(len(xLabels))), labels = xLabels, rotation="vertical")
     plt.tight_layout()
-    # plt.show()
+    plt.show()
 
     return
 
@@ -320,13 +320,13 @@ def graphTopNStates(stateCounts, stateFeatureCounts, n, title):
         xLabels.append(i)
         valueLists.append(featureratedict[i])
 
-    # plt.bar(xLabels, valueLists)
+    plt.bar(xLabels, valueLists)
     plt.xlabel("States")
     plt.ylabel("Count")
     plt.title(title)
     plt.xticks(ticks = list(range(len(xLabels))), labels = xLabels)
     plt.tight_layout()
-    # plt.show()
+    plt.show()
 
     return
 
@@ -360,6 +360,64 @@ Parameters: dataframe
 Returns: None
 '''
 def graphHashtagSentimentByFrequency(data):
+    hashtagsdict = getHashtagRates(data)
+    topcounthashtagsdict = mostCommonHashtags(hashtagsdict, 50)
+    xValues = [] ; yValues = [] ; labels = []
+    for i in topcounthashtagsdict:
+        labels.append(i)
+        xValues.append(topcounthashtagsdict[i])
+        yValues.append(getHashtagSentiment(data, i))
+
+    scatterPlot(xValues, yValues, labels, "Hashtag's frequency v/s Average sentiment score")
+
+    # temp = []
+    # tdict = {}
+    # for key,value in topcounthashtagsdict.items():
+    #     temp2 = []
+    #     temp2.append(key)
+    #     temp2.append(value)
+    #     sentiment = getHashtagSentiment(data, key)
+    #     temp2.append(sentiment)
+    #     temp.append(temp2)
+    #     temp3 = (value, sentiment)
+    #     if temp3 in tdict:
+    #         tdict[temp3] += ","+key
+    #     else:
+    #         tdict[temp3] = key
+        
+    #     freq = []; senti = []
+    #     hastags = list(tdict.values())
+    #     for i in tdict.keys():
+    #         freq.append(i[0])
+    #         senti.append(i[1])
+        
+    #     freqs = list(freq)
+    #     sentis = list(senti)
+
+    # scatterPlot(freqs, sentis, hastags, "Hashtag's frequency v/s Average sentiment score")
+
+    # # for i in topcounthashtagsdict:
+    # #     tempdict = {}
+    # #     tempdict[topcounthashtagsdict[i]] = getHashtagSentiment(data, i)
+    # #     tdict[i] = tempdict
+
+    # # print("Outer dict: ", tdict)
+    # # print("Inner dict: ", tempdict)
+
+    # # xValues = [] ; yValues = [] ; labels = []
+    # # for i in topcounthashtagsdict:
+    # #     if topcounthashtagsdict[i] in tempdict:
+    # #         if getHashtagSentiment(data, i) == tempdict[topcounthashtagsdict[i]]:
+    # #             labels.replace()
+    # #     else:
+    # #         tempdict[topcounthashtagsdict[i]] = getHashtagSentiment(data, i)
+    # #         labels.append(i)
+    # #         xValues.append(topcounthashtagsdict[i])
+    # #         yValues.append(getHashtagSentiment(data, i))
+
+    # # print(tempdict)
+    # # scatterPlot(xValues, yValues, labels, "Hashtag's frequency v/s Average sentiment score")
+
     return
 
 
